@@ -10,7 +10,6 @@ def test_scheme = 'JenkinProject' // Scheme to build tests
 def simulator_device = 'iPhone 11' // Name of the device type to use for tests
 // 2. If you want to upload builds to a server, update the buildURL variable and uncomment the scp command under stage('Save')
 // 3. If you want Slack notifications, return true in the functions below and set the Slack channel
-def slackChannel = '#general'
 
 
 def sendStartNotification() {
@@ -69,15 +68,15 @@ node {
                 // Just build for the example project
                 // We can't archive because there's no code signing set up
                 // Set up a development team and code signing to archive an ipa
-                sh "xcrun xcodebuild -scheme '${build_scheme}' -destination 'name=iPhone 11' clean build | tee build/xcodebuild.log | xcpretty"
+                //sh "xcrun xcodebuild -scheme '${build_scheme}' -destination 'name=iPhone 11' clean build | tee build/xcodebuild.log | xcpretty"
 
                 // Uncomment this when building a project with code signing set up
-                /*sh "xcrun xcodebuild -scheme '${build_scheme}' archive -archivePath 'build/${xcarchive_name}' | tee build/xcodebuild.log | xcpretty"
+                sh "xcrun xcodebuild -scheme '${build_scheme}' archive -archivePath 'build/${xcarchive_name}' | tee build/xcodebuild.log | xcpretty"
                 sh "xcrun xcodebuild -exportArchive -exportOptionsPlist exportOptions.plist -archivePath 'build/${xcarchive_name}' -exportPath build"
                 dir('build') {
                     sh "zip -qr 'Jenkins-iOS-Example-${env.BUILD_NUMBER}.zip' '${xcarchive_name}'"
                     sh "mv 'Jenkins iOS Example.ipa' 'Jenkins iOS Example-${branchNameForURL}.ipa'"
-                }*/
+                }
             }
         }
 
