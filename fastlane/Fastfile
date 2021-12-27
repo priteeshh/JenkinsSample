@@ -20,6 +20,5 @@ platform :ios do
   lane :beta do
     increment_build_number(xcodeproj: "JenkinProject.xcodeproj")
     build_app(scheme: "JenkinProject")
-    upload_to_testflight
   end
 end
